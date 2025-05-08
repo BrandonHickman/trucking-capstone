@@ -1,0 +1,36 @@
+Table users {
+  id int pk
+  name varchar
+  email varchar [unique]
+  password varchar
+}
+
+
+Table trucks {
+  id int pk
+  make varchar
+  model varchar
+  plate varchar [unique]
+  userId int
+  
+  
+}
+
+Table loads {
+  id int pk
+  pickup varchar
+  dropoff varchar
+  statusId int [ref: > statuses.id]
+  userId int 
+  truckId int
+}
+Table statuses {
+  id int pk
+  name varchar
+}
+
+
+
+Ref: "users"."id" < "trucks"."userId"
+
+Ref: "trucks"."id" < "loads"."truckId"

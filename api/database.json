@@ -1,0 +1,38 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Brandon Hickman",
+            "email": "brandon@gmail.com",
+            "password": "123"
+        }
+    ],
+    "trucks": [
+        {
+            "id": 1,
+            "make": "Peterbilt",
+            "plate": "12A-FS2",
+            "userId": 0
+        }
+    ],
+    "loads": [
+        {
+            "id": 1,
+            "pickup": "Nashville, TN",
+            "dropoff": "Indianapolis, IN",
+            "statusId": 0,
+            "userId": 0,
+            "truckId": 0
+        }
+    ],
+    "statuses": [
+    {
+        "id": 1,
+        "name": "Available"
+    },
+    {
+        "id": 2,
+        "name": "Out for delivery"
+    }
+    ]
+}
