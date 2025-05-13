@@ -7,24 +7,24 @@ export const EmployeeNav = () => {
   return (
     <ul className="navbar">
       <li className="navbar-item">
-        <Link to="/trucks">Tickets</Link>
+        <Link to="/">Home</Link>
       </li>
       <li className="navbar-item">
-        <Link to="/loads">Employees</Link>
+        <Link to="/trucks">Trucks</Link>
       </li>
       <li className="navbar-item">
-        <Link to="/customers">Customers</Link>
+        <Link to="/loads">Loads</Link>
       </li>
       <li className="navbar-item">
-        <Link to="/profile">Profile</Link>
+        <Link to="/dispatchers">Dispatchers</Link>
       </li>
-      {localStorage.getItem("honey_user") ? (
+      {localStorage.getItem("dispatcher_user") ? (
         <li className="navbar-item navbar-logout">
           <Link
             className="navbar-link"
             to=""
             onClick={() => {
-              localStorage.removeItem("honey_user"); // change this
+              localStorage.removeItem("dispatcher_user");
               navigate("/", { replace: true });
             }}
           >

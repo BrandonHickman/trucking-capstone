@@ -1,3 +1,43 @@
+import { Outlet, Route, Routes } from "react-router-dom"
+import { EmployeeNav } from "../components/nav/EmployeeNav.jsx"
+import { Welcome } from "../components/welcome/Welcome.jsx"
+import { Load } from "../components/loads/Loads.jsx"
+import { LoadDetails } from "../components/loads/LoadDetails.jsx"
+import { useEffect, useState } from "react"
+import { CreateLoad } from "../components/forms/LoadForm.jsx"
+
+
+
+
 export const ApplicationViews = () => {
-  return <></>
+  const [currentUser, setCurrentUser] = useState({})
+
+  useEffect(() => {
+    const localDispatcherUser = localStorage.getItem("dispatcher_user")
+    const dispatcherUserObject = JSON.parse(localDispatcherUser)
+
+    setCurrentUser(dispatcherUserObject)
+  }, [])
+
+
+  return (
+  <Routes>
+    <Route
+    path="/"
+    element={
+      <>
+      <EmployeeNav />
+      <Outlet />
+      </>
+    }
+    >
+      <Route index element={<Welcome />} />
+      <Route path="loads"> 
+      <Route index element={<Load currentUser={currentUser}/>} />
+      <Route path=":loadId" element={<LoadDetails currentUser={currentUser}/>} />
+      <Route path="form" element={<CreateLoad currentUser={currentUser}/>} />
+      </Route>
+    </Route>
+  </Routes>
+)
 }

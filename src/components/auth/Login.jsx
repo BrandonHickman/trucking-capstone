@@ -2,10 +2,13 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
-import { getUserByEmail } from "../../services/userService"
+import { getUserByEmail } from "../../services/userService.jsx"
+
+
 
 export const Login = () => {
   const [email, set] = useState("")
+  const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
   const handleLogin = (e) => {
@@ -15,10 +18,10 @@ export const Login = () => {
       if (foundUsers.length === 1) {
         const user = foundUsers[0]
         localStorage.setItem(
-          "honey_user", // change this
+          "dispatcher_user", 
           JSON.stringify({
-            id: user.id,
-            isStaff: user.isStaff, // don't need this, maybe?
+            id: user.id
+            
           })
         )
 
@@ -43,6 +46,15 @@ export const Login = () => {
                 onChange={(evt) => set(evt.target.value)}
                 className="form-control"
                 placeholder="Email address"
+                required
+                autoFocus
+              />
+              <input
+                type="password"
+                value={password}
+                onChange={(evt) => setPassword(evt.target.value)}
+                className="form-control"
+                placeholder="Password"
                 required
                 autoFocus
               />

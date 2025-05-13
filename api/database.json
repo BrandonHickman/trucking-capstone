@@ -1,38 +1,148 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Brandon Hickman",
-            "email": "brandon@gmail.com",
-            "password": "123"
-        }
-    ],
-    "trucks": [
-        {
-            "id": 1,
-            "make": "Peterbilt",
-            "plate": "12A-FS2",
-            "userId": 0
-        }
-    ],
-    "loads": [
-        {
-            "id": 1,
-            "pickup": "Nashville, TN",
-            "dropoff": "Indianapolis, IN",
-            "statusId": 0,
-            "userId": 0,
-            "truckId": 0
-        }
-    ],
-    "statuses": [
+  "users": [
     {
-        "id": 1,
-        "name": "Available"
+      "id": 1,
+      "name": "Brandon Hickman",
+      "email": "brandon@gmail.com",
+      "password": "123"
     },
     {
-        "id": 2,
-        "name": "Out for delivery"
+      "id": 2,
+      "name": "Ashley Martinez",
+      "email": "ashley.martinez@example.com",
+      "password": "pass456"
+    },
+    {
+      "id": 3,
+      "name": "Derek Lee",
+      "email": "derek.lee@example.com",
+      "password": "truck789"
+    },
+    {
+      "id": 4,
+      "name": "Monica Reed",
+      "email": "monica.reed@example.com",
+      "password": "logistics123"
+    },
+    {
+      "id": 5,
+      "name": "Jamal Thompson",
+      "email": "jamal.thompson@example.com",
+      "password": "fleet2024"
     }
-    ]
+  ],
+  "trucks": [
+    {
+      "id": 1,
+      "make": "Peterbilt",
+      "plate": "12A-FS2",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "make": "Freightliner",
+      "plate": "87B-TR9",
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "make": "Kenworth",
+      "plate": "45C-JK3",
+      "userId": 3
+    },
+    {
+      "id": 4,
+      "make": "Volvo",
+      "plate": "99D-PL7",
+      "userId": 4
+    },
+    {
+      "id": 5,
+      "make": "International",
+      "plate": "63E-XD1",
+      "userId": 5
+    },
+    {
+      "id": 6,
+      "make": "Mack",
+      "plate": "10F-YQ8",
+      "userId": 1
+    }
+  ],
+  "loads": [
+    {
+      "id": 1,
+      "pickup": "Nashville, TN",
+      "dropoff": "Indianapolis, IN",
+      "statusId": 1,
+      "userId": 1,
+      "truckId": 1
+    },
+    {
+      "id": 2,
+      "pickup": "Atlanta, GA",
+      "dropoff": "Charlotte, NC",
+      "statusId": 2,
+      "userId": 2,
+      "truckId": 2
+    },
+    {
+      "id": 3,
+      "pickup": "Chicago, IL",
+      "dropoff": "Detroit, MI",
+      "statusId": 1,
+      "userId": 3,
+      "truckId": 3
+    },
+    {
+      "id": 4,
+      "pickup": "Dallas, TX",
+      "dropoff": "Houston, TX",
+      "statusId": 2,
+      "userId": 4,
+      "truckId": 4
+    },
+    {
+      "id": 5,
+      "pickup": "Phoenix, AZ",
+      "dropoff": "Las Vegas, NV",
+      "statusId": 1,
+      "userId": 5,
+      "truckId": 5
+    },
+    {
+      "id": 6,
+      "pickup": "Cincinnati, OH",
+      "dropoff": "Louisville, KY",
+      "statusId": 2,
+      "userId": 1,
+      "truckId": 6
+    },
+    {
+      "pickup": "Springfield, MO",
+      "dropoff": "Nashville, TN",
+      "userId": 3,
+      "id": 8
+    },
+    {
+      "pickup": "Nashville, TN",
+      "dropoff": "Miami, FL",
+      "userId": 1,
+      "id": 9
+    }
+  ],
+  "statuses": [
+    {
+      "id": 1,
+      "name": "Available"
+    },
+    {
+      "id": 2,
+      "name": "Out for delivery"
+    },
+    {
+      "id": 3,
+      "name": "Completed"
+    }
+  ]
 }

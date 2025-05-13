@@ -1,24 +1,23 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
-import { createUser, getUserByEmail } from "../../services/userService"
+import { createUser, getUserByEmail } from "../../services/userService.jsx"
+
 
 export const Register = (props) => {
-  const [customer, setCustomer] = useState({
-    email: "",
-    fullName: "",
-    isStaff: false, // won't need probably
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: ""
   })
   let navigate = useNavigate()
 
   const registerNewUser = () => {
-    createUser(customer).then((createdUser) => {
+    createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
-          "honey_user", // change this
+          "dispatcher_user", 
           JSON.stringify({
-            id: createdUser.id,
-            staff: createdUser.isStaff,
+            id: createdUser.id
           })
         )
 
@@ -29,7 +28,7 @@ export const Register = (props) => {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    getUserByEmail(customer.email).then((response) => {
+    getUserByEmail(newUser.email).then((response) => {
       if (response.length > 0) {
         // Duplicate email. No good.
         window.alert("Account with that email address already exists")
@@ -41,22 +40,22 @@ export const Register = (props) => {
   }
 
   const updateCustomer = (evt) => {
-    const copy = { ...customer }
+    const copy = { ...newUser }
     copy[evt.target.id] = evt.target.value
-    setCustomer(copy)
+    setNewUser(copy)
   }
 
   return (
     <main style={{ textAlign: "center" }}>
       <form className="form-login" onSubmit={handleRegister}>
-        <h1>Honey Rae Repairs</h1>
+        <h1>American Transport</h1>
         <h2>Please Register</h2>
         <fieldset>
           <div className="form-group">
             <input
               onChange={updateCustomer}
               type="text"
-              id="fullName"
+              id="name"
               className="form-control"
               placeholder="Enter your name"
               required
@@ -76,7 +75,7 @@ export const Register = (props) => {
             />
           </div>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <div className="form-group">
             <label>
               <input
@@ -91,7 +90,7 @@ export const Register = (props) => {
               I am an employee{" "}
             </label>
           </div>
-        </fieldset>
+        </fieldset> */}
         <fieldset>
           <div className="form-group">
             <button className="login-btn btn-info" type="submit">
