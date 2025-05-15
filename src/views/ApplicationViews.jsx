@@ -4,7 +4,7 @@ import { Welcome } from "../components/welcome/Welcome.jsx"
 import { Load } from "../components/loads/Loads.jsx"
 import { LoadDetails } from "../components/loads/LoadDetails.jsx"
 import { useEffect, useState } from "react"
-import { CreateLoad } from "../components/forms/LoadForm.jsx"
+import { LoadForm } from "../components/forms/LoadForm.jsx"
 
 
 
@@ -35,7 +35,8 @@ export const ApplicationViews = () => {
       <Route path="loads"> 
       <Route index element={<Load currentUser={currentUser}/>} />
       <Route path=":loadId" element={<LoadDetails currentUser={currentUser}/>} />
-      <Route path="form" element={<CreateLoad currentUser={currentUser}/>} />
+      <Route path="form" element={<LoadForm currentUser={currentUser}/>} />
+      <Route path="form/:loadId" element={<LoadForm currentUser={currentUser} />} />
       </Route>
     </Route>
   </Routes>

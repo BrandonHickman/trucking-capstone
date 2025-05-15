@@ -74,7 +74,7 @@
       "id": 1,
       "pickup": "Nashville, TN",
       "dropoff": "Indianapolis, IN",
-      "statusId": 1,
+      "statusId": 3,
       "userId": 1,
       "truckId": 1
     },
@@ -90,7 +90,7 @@
       "id": 3,
       "pickup": "Chicago, IL",
       "dropoff": "Detroit, MI",
-      "statusId": 1,
+      "statusId": 2,
       "userId": 3,
       "truckId": 3
     },
@@ -106,29 +106,25 @@
       "id": 5,
       "pickup": "Phoenix, AZ",
       "dropoff": "Las Vegas, NV",
-      "statusId": 1,
+      "statusId": 2,
       "userId": 5,
       "truckId": 5
     },
     {
-      "id": 6,
-      "pickup": "Cincinnati, OH",
-      "dropoff": "Louisville, KY",
-      "statusId": 2,
+      "pickup": "Indianapolis. IN",
+      "dropoff": "New York City, NY",
       "userId": 1,
-      "truckId": 6
-    },
-    {
-      "pickup": "Springfield, MO",
-      "dropoff": "Nashville, TN",
-      "userId": 3,
-      "id": 8
+      "truckId": 6,
+      "statusId": 3,
+      "id": 6
     },
     {
       "pickup": "Nashville, TN",
-      "dropoff": "Miami, FL",
+      "dropoff": "Tampa, FL",
       "userId": 1,
-      "id": 9
+      "truckId": 3,
+      "statusId": 3,
+      "id": 7
     }
   ],
   "statuses": [
@@ -138,7 +134,7 @@
     },
     {
       "id": 2,
-      "name": "Out for delivery"
+      "name": "In Transit"
     },
     {
       "id": 3,

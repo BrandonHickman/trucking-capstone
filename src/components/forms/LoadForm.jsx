@@ -1,81 +1,130 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { getAllUsers } from "../../services/userService.jsx"
-import { createLoad } from "../../services/loadService.jsx"
-import "./Form.css"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getAllUsers } from "../../services/userService.jsx";
+import {
+  createLoad,
+  getLoadById,
+  updateLoad
+} from "../../services/loadService.jsx";
+import { getAllTrucks } from "../../services/truckService.jsx";
+import "./Form.css";
 
-export const CreateLoad = ({ currentUser }) => {
-    const [pickup, setPickup] = useState("")
-    const [dropoff, setDropoff] = useState("")
-    const [users, setUsers] = useState([])
-    const [assignedUserId, setAssignedUserId] = useState(currentUser?.id || "")
+export const LoadForm = ({ currentUser }) => {
+  const [pickup, setPickup] = useState("");
+  const [dropoff, setDropoff] = useState("");
+  const [users, setUsers] = useState([]);
+  const [assignedUserId, setAssignedUserId] = useState("");
+  const [trucks, setTrucks] = useState([]);
+  const [selectedTruckId, setSelectedTruckId] = useState("");
 
-    const navigate = useNavigate()
+  const { loadId } = useParams(); // <-- capture URL param
+  const navigate = useNavigate();
+  const isEditing = !!loadId;
 
-    useEffect(() => {
-        getAllUsers().then((fetchedUsers) => {
-            setUsers(fetchedUsers)
-        })
-    }, [])
+  // Populate users and trucks
+  useEffect(() => {
+    getAllUsers().then(setUsers);
+    getAllTrucks().then(setTrucks);
+  }, []);
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-
-        const newLoad = {
-            pickup,
-            dropoff,
-            userId: assignedUserId
-        }
-
-        createLoad(newLoad)
-        .then(() => {
-            navigate("/loads")
-        })
-        .catch((error) => {
-            console.error("Failed to create load:", error)
-        })
+  // If editing, fetch the existing load
+  useEffect(() => {
+    if (isEditing) {
+      getLoadById(loadId).then((load) => {
+        setPickup(load.pickup);
+        setDropoff(load.dropoff);
+        setAssignedUserId(load.userId || "");
+        setSelectedTruckId(load.truckId || "");
+      });
     }
+  }, [loadId, isEditing]);
 
-    return (
-        <div className="form-container">
-            <h2>Create New Load</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Pickup Location:
-                    <input
-                    type="text"
-                    value={pickup}
-                    onChange={(event) => setPickup(event.target.value)}
-                    required
-                    />
-                </label>
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-                <label>
-                    Dropoff Location:
-                    <input
-                    type="text"
-                    value={dropoff}
-                    onChange={(event) => setDropoff(event.target.value)}
-                    required
-                    />
-                </label>
+    const statusId = assignedUserId ? 2 : 1;
 
-                <label>
-                    Assign to Dispatcher
-                    <select
-                    value={assignedUserId}
-                    onChange={(event) => setAssignedUserId(parseInt(event.target.value))}
-                    >
-                        {users.map((user) => (
-                            <option key={user.id} value={user.id}>
-                            {user.name} {user.id === currentUser.id ? "(You)" : ""} 
-                            </option>
-                        ))}
-                    </select>
-                </label>
+    const loadData = {
+      pickup,
+      dropoff,
+      userId: assignedUserId || null,
+      truckId: selectedTruckId,
+      statusId
+    };
 
-                <button type="submit">Create Load</button>
-            </form>
-        </div>
-    )
-}
+    const action = isEditing
+      ? updateLoad(parseInt(loadId), loadData)
+      : createLoad(loadData);
+
+    action
+      .then(() => navigate("/loads"))
+      .catch((err) => console.error("Error saving load:", err));
+  };
+
+  return (
+    <div className="form-container">
+      <h2>{isEditing ? "Edit Load" : "Create New Load"}</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Pickup Location:
+          <input
+            type="text"
+            value={pickup}
+            onChange={(e) => setPickup(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          Dropoff Location:
+          <input
+            type="text"
+            value={dropoff}
+            onChange={(e) => setDropoff(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          Assign to Dispatcher:
+          <select
+            value={assignedUserId}
+            onChange={(e) =>
+              setAssignedUserId(
+                e.target.value ? parseInt(e.target.value) : ""
+              )
+            }
+          >
+            <option value="">--Select a Dispatcher--</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name} {user.id === currentUser.id ? "(You)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          Assign Truck:
+          <select
+            value={selectedTruckId}
+            onChange={(e) => setSelectedTruckId(parseInt(e.target.value))}
+            required
+          >
+            <option value="">--Select a Truck--</option>
+            {trucks.map((truck) => (
+              <option key={truck.id} value={truck.id}>
+                {truck.make} - {truck.plate}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <button type="submit">{isEditing ? "Update Load" : "Create Load"}</button>
+        <button type="button" onClick={() => navigate("/loads")} className="cancel-button">
+          Cancel
+        </button>
+      </form>
+    </div>
+  );
+};
