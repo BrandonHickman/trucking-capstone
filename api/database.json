@@ -98,7 +98,7 @@
       "id": 4,
       "pickup": "Dallas, TX",
       "dropoff": "Houston, TX",
-      "statusId": 2,
+      "statusId": 3,
       "userId": 4,
       "truckId": 4
     },
@@ -125,6 +125,14 @@
       "truckId": 3,
       "statusId": 3,
       "id": 7
+    },
+    {
+      "pickup": "Nashville, TN",
+      "dropoff": "Joplin, MO",
+      "userId": 1,
+      "truckId": 2,
+      "statusId": 3,
+      "id": 8
     }
   ],
   "statuses": [
