@@ -37,6 +37,27 @@ export const getAllLoadsWithDispatchers = () => {
     });
 };
 
+export const getAllLoadsWithTrucks = () => {
+  return Promise.all([
+    fetch("http://localhost:8088/loads"),
+    fetch("http://localhost:8088/trucks")
+  ])
+    .then(([loadsRes, trucksRes]) => {
+      if (!loadsRes.ok || !trucksRes.ok) {
+        throw new Error("Failed to fetch loads or users");
+      }
+      return Promise.all([loadsRes.json(), trucksRes.json()]);
+    })
+    .then(([loads, trucks]) => {
+      return loads.map((load) => {
+        const truck = trucks.find((t) => t.id === load.truckId);
+        return { ...load, truck: truck || null };
+      });
+    });
+};
+
+
+
 
 export const deleteLoadById = (id) => {
   return fetch(`http://localhost:8088/loads/${id}`, {

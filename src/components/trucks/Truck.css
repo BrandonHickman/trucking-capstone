@@ -1,0 +1,54 @@
+.trucks-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 20px;
+}
+
+.trucks-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.truck {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.truck-card {
+  background-color: #175f99;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  width: 900px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.truck-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.truck-card h3 {
+  margin-bottom: 8px;
+}
+
+.create-truck-btn {
+  padding: 10px 16px;
+  font-size: 1rem;
+  background-color: #f1a753;
+  color: rgb(253, 253, 253);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.create-truck-btn:hover {
+  background-color: #218838;
+}

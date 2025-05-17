@@ -67,6 +67,16 @@
       "make": "Mack",
       "plate": "10F-YQ8",
       "userId": 1
+    },
+    {
+      "make": "Ford F450",
+      "plate": "12S-AW3",
+      "id": 7
+    },
+    {
+      "make": "Peterbilt",
+      "plate": "AS3-12D",
+      "id": 8
     }
   ],
   "loads": [

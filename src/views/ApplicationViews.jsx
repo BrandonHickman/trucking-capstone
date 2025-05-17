@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { LoadForm } from "../components/forms/LoadForm.jsx";
 import { DispatcherList } from "../components/dispatcher/Dispatcher.jsx";
 import { DispatcherDetails } from "../components/dispatcher/DispatcherDetails.jsx";
+import { Truck } from "../components/trucks/Truck.jsx";
+import { TruckDetails } from "../components/trucks/TruckDetails.jsx";
+import { TruckForm } from "../components/forms/TruckForm.jsx";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -47,6 +50,12 @@ export const ApplicationViews = () => {
         <Route path="dispatchers">
           <Route index element={<DispatcherList />} />
           <Route path=":dispatcherId" element={<DispatcherDetails />} />
+        </Route>
+
+        <Route path="trucks">
+          <Route index element={<Truck />} />
+          <Route path="form" element={<TruckForm />} />
+          <Route path=":truckId" element={<TruckDetails />} />
         </Route>
       </Route>
     </Routes>
