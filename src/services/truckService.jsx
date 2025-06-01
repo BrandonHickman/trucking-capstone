@@ -8,7 +8,7 @@ export const getAllLoadsWithTrucks = () =>{
 }
 
 export const getTruckById = (id) => {
-    return fetch(`http://localhost:8088/trucks/${id}`)
+    return fetch(`http://localhost:8088/trucks/${id}?_expand=user`)
     .then((res) => res.json())
 }
 

@@ -13,7 +13,9 @@ export const DispatcherList = () => {
 
   return (
     <div className="dispatchers-container">
+      <div className="dispatchers-header">
       <h2>Dispatchers</h2>
+      </div>
       <div className="dispatchers">
         {dispatchers.map((dispatcher) => (
           <div

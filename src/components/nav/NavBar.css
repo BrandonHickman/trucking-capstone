@@ -27,3 +27,7 @@
   .navbar-link:hover {
     color: var(--primary);
   }
+
+  .navbar-item:hover {
+    color: var(--primary);
+  }

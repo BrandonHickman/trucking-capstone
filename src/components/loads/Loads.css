@@ -99,12 +99,17 @@
   align-items: center;
   gap: 1rem;
 }
-
+.create-load-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 1rem; 
+}
 
 .create-load-btn {
   padding: 10px 16px;
   font-size: 1rem;
-  background-color: #f1a753;
+  background-color: #dbb020;
   color: rgb(253, 253, 253);
   border: none;
   border-radius: 6px;
@@ -112,7 +117,7 @@
 }
 
 .create-load-btn:hover {
-  background-color: #218838;
+  background-color: #f1aa10;
 }
 
 .claim-load-btn {
@@ -141,4 +146,18 @@
 
 .complete-button:hover {
   background-color: #138496;
+}
+
+.filter-bar {
+  margin-bottom: 1rem;
+}
+
+.filter-bar button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.filter-bar button.active {
+  background-color: #4CAF50;
+  color: white;
 }

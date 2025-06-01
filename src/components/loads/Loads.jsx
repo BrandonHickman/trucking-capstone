@@ -8,9 +8,13 @@ import {
   markLoadAsComplete,
 } from "../../services/loadService.jsx";
 import { getAllStatuses } from "../../services/statusServices.jsx";
+import { getAllTrucks } from "../../services/truckService.jsx";
+import { LoadFilterBar } from "./LoadFilterBar.jsx";
 
 export const Load = ({ currentUser }) => {
   const [allLoads, setAllLoads] = useState([]);
+  const [filter, setFilter] = useState("all");
+
   const navigate = useNavigate();
 
   const handleEdit = (loadId) => {
@@ -34,31 +38,52 @@ export const Load = ({ currentUser }) => {
       });
   };
 
-  const handleClaimLoad = (loadId) => {
-  claimLoad(loadId, currentUser.id)
-    .then(() => Promise.all([getAllStatuses(), getAllLoadsWithDispatchers()]))
-    .then(([statuses, loads]) => {
-      const loadsWithStatus = loads.map((load) => {
-        const status = statuses.find((s) => s.id === load.statusId);
-        return { ...load, status };
-      });
+  const filteredLoads = allLoads.filter((load) => {
+    if (filter === "available") return load.statusId === 1;
+    if (filter === "inTransit") return load.statusId === 2;
+    if (filter === "completed") return load.statusId === 3;
+    return true;
+  });
 
-      setAllLoads(loadsWithStatus);
-    })
-    .catch((error) => {
-      console.error("Failed to claim load:", error);
-    });
-};
+  const handleClaimLoad = (loadId) => {
+    claimLoad(loadId, currentUser.id)
+      .then(() =>
+        Promise.all([
+          getAllStatuses(),
+          getAllLoadsWithDispatchers(),
+          getAllTrucks(),
+        ])
+      )
+      .then(([statuses, loads, trucks]) => {
+        const loadsWithStatus = loads.map((load) => {
+          const status = statuses.find((s) => s.id === load.statusId);
+          const truck = trucks.find((t) => t.id === load.truckId);
+          return { ...load, status, truck };
+        });
+
+        setAllLoads(loadsWithStatus);
+      })
+      .catch((error) => {
+        console.error("Failed to claim load:", error);
+      });
+  };
 
   const handleMarkComplete = (e, loadId) => {
     e.stopPropagation();
 
     markLoadAsComplete(loadId)
-      .then(() => Promise.all([getAllStatuses(), getAllLoadsWithDispatchers()]))
-      .then(([statuses, loads]) => {
+      .then(() =>
+        Promise.all([
+          getAllStatuses(),
+          getAllLoadsWithDispatchers(),
+          getAllTrucks(),
+        ])
+      )
+      .then(([statuses, loads, trucks]) => {
         const loadsWithStatus = loads.map((load) => {
           const status = statuses.find((s) => s.id === load.statusId);
-          return { ...load, status };
+          const truck = trucks.find((t) => t.id === load.truckId);
+          return { ...load, status, truck };
         });
 
         setAllLoads(loadsWithStatus);
@@ -69,11 +94,16 @@ export const Load = ({ currentUser }) => {
   };
 
   useEffect(() => {
-    Promise.all([getAllLoadsWithDispatchers(), getAllStatuses()])
-      .then(([loads, statuses]) => {
+    Promise.all([
+      getAllLoadsWithDispatchers(),
+      getAllStatuses(),
+      getAllTrucks(),
+    ])
+      .then(([loads, statuses, trucks]) => {
         const loadStatus = loads.map((load) => {
           const status = statuses.find((s) => s.id === load.statusId);
-          return { ...load, status };
+          const truck = trucks.find((t) => t.id === load.truckId);
+          return { ...load, status, truck };
         });
         setAllLoads(loadStatus);
       })
@@ -81,18 +111,24 @@ export const Load = ({ currentUser }) => {
   }, []);
 
   return (
-    <div className="loads-container">
-      <div className="loads-header">
-        <h2>All Loads</h2>
-        <button
-          className="create-load-btn"
-          onClick={() => navigate("/loads/form")}
-        >
-          Create New Load
-        </button>
-      </div>
+  <div className="loads-container">
+    <div className="loads-header">
+      <h2>All Loads</h2>
+    </div>
+
+    <div className="create-load-container">
+      <button
+        className="create-load-btn"
+        onClick={() => navigate("/loads/form")}
+      >
+        Create New Load
+      </button>
+    </div>
+
+      <LoadFilterBar onFilterChange={setFilter} currentFilter={filter} />
+
       <div className="loads">
-        {allLoads.map((load) => (
+        {filteredLoads.map((load) => (
           <div
             key={load.id}
             className="load-card"
@@ -103,6 +139,12 @@ export const Load = ({ currentUser }) => {
             </h3>
             <p>Assigned Dispatcher: {load.user?.name || "Unassigned"}</p>
             <p>Status: {load.status?.name || "Unknown"}</p>
+            <p>
+              Assigned Truck:{" "}
+              {load.truck
+                ? `${load.truck.make} (${load.truck.plate})`
+                : "No truck assigned"}
+            </p>
 
             {currentUser?.id === load.userId && load.statusId !== 3 && (
               <div

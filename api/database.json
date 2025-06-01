@@ -63,20 +63,10 @@
       "userId": 5
     },
     {
-      "id": 6,
-      "make": "Mack",
-      "plate": "10F-YQ8",
-      "userId": 1
-    },
-    {
-      "make": "Ford F450",
-      "plate": "12S-AW3",
-      "id": 7
-    },
-    {
       "make": "Peterbilt",
-      "plate": "AS3-12D",
-      "id": 8
+      "plate": "12D-S12",
+      "userId": 1,
+      "id": 6
     }
   ],
   "loads": [
@@ -143,6 +133,14 @@
       "truckId": 2,
       "statusId": 3,
       "id": 8
+    },
+    {
+      "pickup": "New York City, NY",
+      "dropoff": "San Diego, CA",
+      "userId": 1,
+      "truckId": 2,
+      "statusId": 3,
+      "id": 9
     }
   ],
   "statuses": [

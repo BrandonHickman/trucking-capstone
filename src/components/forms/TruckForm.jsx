@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTruck } from "../../services/truckService";
 import "./Form.css";
+import { getAllUsers } from "../../services/userService.jsx";
 
-export const TruckForm = () => {
+export const TruckForm = ({ currentUser }) => {
   const [make, setMake] = useState("");
   const [plate, setPlate] = useState("");
+  const [users, setUsers] = useState([])
+  const [assignedUserId, setAssignedUserId] = useState(currentUser.id || "")
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    getAllUsers().then(setUsers)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +22,7 @@ export const TruckForm = () => {
     const newTruck = {
       make,
       plate,
+      userId: assignedUserId,
     };
 
     createTruck(newTruck)
@@ -45,6 +54,25 @@ export const TruckForm = () => {
             title="Plate must be in the format XXX-XXX (letters and numbers allowed)"
             required
           />
+        </label>
+
+        <label>
+          Assign to Dispatcher:
+          <select
+            value={assignedUserId}
+            onChange={(e) =>
+              setAssignedUserId(
+                e.target.value ? parseInt(e.target.value) : ""
+              )
+            }
+          >
+            <option value="">--Select a Dispatcher--</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name} {user?.id === currentUser.id ? "(You)" : ""}
+              </option>
+            ))}
+          </select>
         </label>
 
         <button type="submit">Create Truck</button>

@@ -1,4 +1,4 @@
-.welcome-container {
+.welcome-background {
     margin: 2rem auto;
     width: 75%;
     text-align: center;
@@ -8,14 +8,24 @@
     border-radius: 0.5rem;
   }
   
-  /* This targets any h1 that is a child of an element with the .welcome-container class */
-  .welcome-container > h1 {
+  /* This targets any h1 that is a child of an element with the .welcome-background class */
+  .welcome-background > h1 {
     display: flex;
     flex-direction: column;
     color: var(--primary);
   }
   
-  /* This targets any div that is a child of an element with the .welcome-container class */
-  .welcome-container > div {
+  /* This targets any div that is a child of an element with the .welcome-background class */
+  .welcome-background > div {
     font-style: italic;
   }
+
+.welcome-content {
+  color: rgb(248, 196, 25);
+  font-size: larger;
+  
+}
+
+.truck-logo {
+  max-width: 500px;
+}

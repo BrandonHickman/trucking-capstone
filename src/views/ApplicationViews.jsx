@@ -54,8 +54,8 @@ export const ApplicationViews = () => {
 
         <Route path="trucks">
           <Route index element={<Truck />} />
-          <Route path="form" element={<TruckForm />} />
-          <Route path=":truckId" element={<TruckDetails />} />
+          <Route path="form" element={<TruckForm currentUser={currentUser} />} />
+          <Route path=":truckId" element={<TruckDetails currentUser={currentUser} />} />
         </Route>
       </Route>
     </Routes>

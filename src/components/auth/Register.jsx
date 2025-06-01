@@ -1,49 +1,48 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import "./Login.css"
-import { createUser, getUserByEmail } from "../../services/userService.jsx"
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import { createUser, getUserByEmail } from "../../services/userService.jsx";
 
 export const Register = (props) => {
   const [newUser, setNewUser] = useState({
     name: "",
-    email: ""
-  })
-  let navigate = useNavigate()
+    email: "",
+  });
+  let navigate = useNavigate();
 
   const registerNewUser = () => {
     createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
-          "dispatcher_user", 
+          "dispatcher_user",
           JSON.stringify({
-            id: createdUser.id
+            id: createdUser.id,
           })
-        )
+        );
 
-        navigate("/")
+        navigate("/");
       }
-    })
-  }
+    });
+  };
 
   const handleRegister = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     getUserByEmail(newUser.email).then((response) => {
       if (response.length > 0) {
         // Duplicate email. No good.
-        window.alert("Account with that email address already exists")
+        window.alert("Account with that email address already exists");
       } else {
         // Good email, create user.
-        registerNewUser()
+        registerNewUser();
       }
-    })
-  }
+    });
+  };
 
-  const updateCustomer = (evt) => {
-    const copy = { ...newUser }
-    copy[evt.target.id] = evt.target.value
-    setNewUser(copy)
-  }
+  const updateNewUser = (evt) => {
+    const copy = { ...newUser };
+    copy[evt.target.id] = evt.target.value;
+    setNewUser(copy);
+  };
 
   return (
     <main style={{ textAlign: "center" }}>
@@ -53,7 +52,7 @@ export const Register = (props) => {
         <fieldset>
           <div className="form-group">
             <input
-              onChange={updateCustomer}
+              onChange={updateNewUser}
               type="text"
               id="name"
               className="form-control"
@@ -66,7 +65,7 @@ export const Register = (props) => {
         <fieldset>
           <div className="form-group">
             <input
-              onChange={updateCustomer}
+              onChange={updateNewUser}
               type="email"
               id="email"
               className="form-control"
@@ -75,22 +74,18 @@ export const Register = (props) => {
             />
           </div>
         </fieldset>
-        {/* <fieldset>
+        <fieldset>
           <div className="form-group">
-            <label>
-              <input
-                onChange={(evt) => {
-                  const copy = { ...customer }
-                  copy.isStaff = evt.target.checked
-                  setCustomer(copy)
-                }}
-                type="checkbox"
-                id="isStaff" // probably won't need
-              />
-              I am an employee{" "}
-            </label>
+            <input
+              onChange={updateNewUser}
+              type="password"
+              id="password"
+              className="form-control"
+              placeholder="Password"
+              required
+            />
           </div>
-        </fieldset> */}
+        </fieldset>
         <fieldset>
           <div className="form-group">
             <button className="login-btn btn-info" type="submit">
@@ -100,5 +95,5 @@ export const Register = (props) => {
         </fieldset>
       </form>
     </main>
-  )
-}
+  );
+};

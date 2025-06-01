@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getLoadById } from "../../services/loadService.jsx"
 import { getAllStatuses } from "../../services/statusServices.jsx"
+import { getAllTrucks } from "../../services/truckService.jsx"
 
 export const LoadDetails = () => {
     const { loadId } = useParams()
@@ -10,9 +11,10 @@ export const LoadDetails = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        Promise.all([getLoadById(loadId), getAllStatuses()])
-        .then(([loadData, statusList]) => {
-            setLoad(loadData)
+        Promise.all([getLoadById(loadId), getAllStatuses(), getAllTrucks()])
+        .then(([loadData, statusList, truckList]) => {
+            const truck = truckList.find((t) => t.id === loadData.truckId)
+            setLoad({ ...loadData, truck })
             setStatuses(statusList)
         })
         .catch((error) => {
@@ -35,6 +37,7 @@ export const LoadDetails = () => {
             <p><strong>Pickup:</strong> {load?.pickup}</p>
             <p><strong>Dropoff:</strong> {load?.dropoff}</p>
             <p><strong>Dispatcher:</strong> {load?.user?.name || "Unassigned"}</p>
+            <p><strong>Truck:</strong> {load.truck ? `${load.truck.make} (${load.truck.plate})` : "No truck assigned"}</p>
             <p><strong>Status:</strong> {statusName}</p>           
         </div>
         </div>

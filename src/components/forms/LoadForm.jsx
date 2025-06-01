@@ -17,17 +17,17 @@ export const LoadForm = ({ currentUser }) => {
   const [trucks, setTrucks] = useState([]);
   const [selectedTruckId, setSelectedTruckId] = useState("");
 
-  const { loadId } = useParams(); // <-- capture URL param
+  const { loadId } = useParams(); 
   const navigate = useNavigate();
   const isEditing = !!loadId;
 
-  // Populate users and trucks
+  
   useEffect(() => {
     getAllUsers().then(setUsers);
     getAllTrucks().then(setTrucks);
   }, []);
 
-  // If editing, fetch the existing load
+  
   useEffect(() => {
     if (isEditing) {
       getLoadById(loadId).then((load) => {
