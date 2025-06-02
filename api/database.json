@@ -67,6 +67,12 @@
       "plate": "12D-S12",
       "userId": 1,
       "id": 6
+    },
+    {
+      "make": "Kenworth",
+      "plate": "12A-DS1",
+      "userId": "",
+      "id": 7
     }
   ],
   "loads": [
@@ -141,6 +147,22 @@
       "truckId": 2,
       "statusId": 3,
       "id": 9
+    },
+    {
+      "pickup": "Jacksonville, FL",
+      "dropoff": "St. Louis, MO",
+      "userId": 1,
+      "truckId": 2,
+      "statusId": 1,
+      "id": 10
+    },
+    {
+      "pickup": "San Diego, CA",
+      "dropoff": "Rochester, NY",
+      "userId": 1,
+      "truckId": 5,
+      "statusId": 2,
+      "id": 11
     }
   ],
   "statuses": [

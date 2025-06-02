@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllLoadsWithTrucks } from "../../services/truckService.jsx";
+import { getAllLoadsWithTrucksAndUsers } from "../../services/truckService.jsx";
 import "../loads/Loads.css"
 
 export const Truck = () => {
@@ -8,22 +8,29 @@ export const Truck = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllLoadsWithTrucks().then((data) => {
-        const uniqueTruckMap = new Map()
+  getAllLoadsWithTrucksAndUsers()
+    .then(({ loads, users, trucks }) => {
+      const userMap = new Map(users.map((u) => [u.id, u]));
+      const truckMap = new Map(trucks.map((t) => [t.id, t]));
 
-        data.forEach((load) => {
-            if (load.truck?.id) {
-                uniqueTruckMap.set(load.truck.id, {
-                    truck: load.truck,
-                    user: load.user,
-                })
-            }
-        })
-        
-        const uniqueTrucks = Array.from(uniqueTruckMap.values())
-        setAllTrucks(uniqueTrucks)
+      const enrichedLoads = loads.map((load) => ({
+        truck: truckMap.get(load.truckId) || null,
+        user: userMap.get(load.userId) || null,
+      }));
+
+      const uniqueTruckMap = new Map();
+      enrichedLoads.forEach(({ truck, user }) => {
+        if (truck?.id) {
+          uniqueTruckMap.set(truck.id, { truck, user });
+        }
+      });
+
+      setAllTrucks(Array.from(uniqueTruckMap.values()));
     })
-  }, []);
+    .catch((error) => {
+      console.error("Error loading trucks:", error);
+    });
+}, []);
 
   return (
     <div className="loads-container">
